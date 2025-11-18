@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import type React from "react";
+import { useRef } from "react";
 
 export const App: React.FC = () => {
 	useGSAP(() => {
@@ -43,28 +44,28 @@ export const App: React.FC = () => {
 	}, []);
 
 	return (
-		<main className="h-dvh w-screen bg-[#DDEBF7] flex flex-col relative overflow-hidden">
+		<main className="h-dvh w-screen bg-[#DDEBF7] flex flex-col relative overflow-x-hidden">
 			<img
 				src="/background.svg"
-				className="w-screen object-cover absolute inset-0"
+				className="w-screen object-cover fixed inset-0 h-[75dvh] sm:h-[70dvh] md:h-[60dvh] xl:h-[40dvh] overflow-visible"
 				alt="Background"
 				draggable="false"
 				id="background-image"
 			/>
 			<img
 				src="/hero/glow-group.svg"
-				className="absolute bottom-0 scale-200 w-screen"
+				className="fixed bottom-0 scale-200 w-screen"
 				alt="Glow 2"
 				draggable="false"
 				id="glow-group"
 			/>
-			<div className="flex-1 relative flex flex-col px-20 pt-6.5 pb-22.5 justify-between items-stretch">
+			<div className="flex-1 relative flex flex-col max-md:px-4 px-20 pt-6.5 pb-22.5 lg:justify-between items-stretch">
 				<nav className="flex items-center gap-10 justify-between">
 					<img
 						src="/hero/logo.svg"
 						alt=""
 					/>
-					<ul className="flex items-center gap-5">
+					<ul className="flex items-center gap-5 max-lg:hidden">
 						{navlinks.map((link) => (
 							<li key={link}>{link}</li>
 						))}
@@ -77,7 +78,7 @@ export const App: React.FC = () => {
 					</button>
 				</nav>
 
-				<div className="flex flex-col flex-1 items-center pt-30 gap-2">
+				<div className="flex flex-col flex-1 items-center pt-12 md:pt-24 lg:pt-30 gap-2">
 					<div className="border-white rounded-lg border w-fit h-10.5 px-2.5 flex items-center gap-1.5">
 						<img
 							src="/trusted-people.png"
@@ -88,7 +89,7 @@ export const App: React.FC = () => {
 					</div>
 					<div className="flex flex-col gap-8">
 						<div className="flex flex-col gap-2">
-							<p className="font-jakarta font-bold text-7xl text-center">
+							<p className="font-jakarta font-extrabold sm:font-bold text-4xl sm:text-5xl lg:text-7xl text-center">
 								Stop Repeating Yourself.
 								<br /> Let AI Remember Everything.
 							</p>
@@ -120,16 +121,7 @@ export const App: React.FC = () => {
 						</div>
 					</div>
 				</div>
-
-				<ul className="flex gap-18.5 justify-center items-center flex-wrap">
-					{partners.map((item) => (
-						<img
-							key={item}
-							src={item}
-							alt={item.split(",")[0]}
-						/>
-					))}
-				</ul>
+				<Partners />
 			</div>
 
 			<p className="fixed bottom-4 text-[#151516] text-xs left-1/2 -translate-x-1/2">
@@ -140,6 +132,7 @@ export const App: React.FC = () => {
 				>
 					Adetunji Adeyinka
 				</a>{" "}
+				<br />
 				Design:{" "}
 				<a
 					className="underline"
@@ -162,3 +155,65 @@ const partners = [
 ];
 
 const navlinks = ["Benefits", "Features", "Pricing", "Solutions", "FAQ’s"];
+
+const Partners = () => {
+	const containerRef = useRef<HTMLUListElement | null>(null);
+
+	useGSAP(() => {
+		const container = containerRef.current;
+		if (!container) return;
+
+		// I am cloning the items so the animation can be seamless
+		const items = container.children;
+		const itemsArray = Array.from(items);
+
+		// Add all the items to the div there
+		itemsArray.forEach((item) => {
+			const clone = item.cloneNode(true);
+			container.appendChild(clone);
+		});
+
+		// The width is half of the width of the container since we cloned the items
+		const totalWidth = container.scrollWidth / 2;
+
+		// Timeline for gsap
+		const tl = gsap.timeline({ repeat: -1 });
+
+		tl.to(container, {
+			x: -totalWidth,
+			duration: 30,
+			ease: "none",
+			onComplete: () => {
+				gsap.set(container, { x: 0 });
+			},
+		});
+
+		container.addEventListener("mouseenter", () => tl.pause());
+		container.addEventListener("mouseleave", () => tl.resume());
+
+		return () => {
+			tl.kill();
+		};
+	}, []);
+
+	return (
+		<div className="overflow-hidden max-w-4xl self-center py-8">
+			<ul
+				ref={containerRef}
+				className="flex gap-12 items-center"
+				id="partner-container"
+				style={{ width: "fit-content" }}
+			>
+				{partners.map((partner, idx) => (
+					<img
+						key={partner}
+						src={partner}
+						alt={partner.split("/")[5]}
+						className="w-24 h-7 object-contain"
+						id={`partner-${idx}`}
+					/>
+				))}
+			</ul>
+		</div>
+	);
+};
