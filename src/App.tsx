@@ -136,9 +136,9 @@ export const App: React.FC = () => {
 				Design:{" "}
 				<a
 					className="underline"
-					href="https://x.com/itzadetunji1"
+					href="https://x.com/nerooeth"
 				>
-					Adetunji Adeyinka
+					Nero
 				</a>
 			</p>
 		</main>
