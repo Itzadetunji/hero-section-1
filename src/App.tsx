@@ -124,7 +124,7 @@ export const App: React.FC = () => {
 				<Partners />
 			</div>
 
-			<p className="fixed bottom-4 text-[#151516] text-xs left-1/2 -translate-x-1/2">
+			<p className="fixed bottom-4 text-[#151516] text-xs left-1/2 -translate-x-1/2 text-center">
 				Code:{" "}
 				<a
 					className="underline"
