@@ -1,6 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @import "tailwindcss";
 
+@font-face {
+	font-family: "Clash Grotesk";
+	src: url("/clash-grotesk.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@theme {
+	--font-jakarta: "Plus Jakarta Sans", sans-serif;
+	--font-clash: "Clash Grotesk", sans-serif;
+}
+
+html,
+body {
+	background-color: #ddebf7;
+}
+
 * {
+	font-family: "Clash Grotesk", sans-serif;
+	font-optical-sizing: auto;
+}
+
+.font-jakarta {
 	font-family: "Plus Jakarta Sans", sans-serif;
 	font-optical-sizing: auto;
 }
