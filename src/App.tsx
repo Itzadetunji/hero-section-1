@@ -53,7 +53,7 @@ export const App: React.FC = () => {
 			/>
 			<img
 				src="/hero/glow-group.svg"
-				className="absolute bottom-0 scale-200"
+				className="absolute bottom-0 scale-200 w-screen"
 				alt="Glow 2"
 				draggable="false"
 				id="glow-group"
