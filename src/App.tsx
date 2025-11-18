@@ -1,5 +1,12 @@
 import React from "react";
 
 export const App: React.FC = () => {
-	return <div>App</div>;
+	return (
+		<main>
+			<img
+				src="/background.svg"
+				alt=""
+			/>
+		</main>
+	);
 };
