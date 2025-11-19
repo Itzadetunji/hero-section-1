@@ -61,7 +61,7 @@ export const App: React.FC = () => {
 				id="glow-group"
 			/>
 			<div className="flex-1 relative flex flex-col max-md:px-4 px-20 pt-6.5 pb-22.5 lg:justify-between items-stretch">
-				<nav className="flex items-center gap-10 justify-between">
+				<nav className="flex items-center gap-10 justify-between max-w-360 self-center w-full">
 					<img
 						src="/hero/logo.svg"
 						alt=""
