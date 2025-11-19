@@ -10,6 +10,7 @@ export const App: React.FC = () => {
 			yoyo: true,
 			repeatDelay: 0.2,
 		});
+
 		glowTimeline.fromTo(
 			"#glow-group",
 			{ scale: 1, y: 50 },
